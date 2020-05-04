@@ -1,1 +1,3 @@
+# Description
+
 In this example, a timer is used to generate the sampling clock for a DAC and an ADC. The DMA-based operation of DAC and ADC allows to arm both without a running clock. As soon as the timer is activated and the conversion clock is running, both ADC and DAC synchronously sample a certain number of samples without any CPU intervention. DAC data needs to be pre-initialized before the sampling is started. At the end of the conversion (number of samples is reached), the ADC data will be collected and sent out using a UART connection.
