@@ -36,6 +36,9 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+periph_drivers/dac/internal_dac.c \
+periph_drivers/adc/internal_adc.c \
+periph_drivers/tim/tim_hal.c \
 Src/main.c \
 Src/gpio.c \
 Src/adc.c \
@@ -128,6 +131,9 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
+-Iperiph_drivers/dac \
+-Iperiph_drivers/adc \
+-Iperiph_drivers/tim \
 -IInc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc/Legacy \
