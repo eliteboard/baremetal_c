@@ -101,11 +101,6 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-
   // device structures for timer, dac, and adc
   // need to be initialized later!
   struct tim_dev_s tim_dev;  
@@ -118,7 +113,6 @@ int main(void)
   int_dac_dev_init(&dac_dev, &tim_dev, &hdac1);  // "connect" dac device with a timer and a certain hardware block
   int_adc_dev_init(&adc_dev, &tim_dev, &hadc1);  // "connect" adc device with a timer and a certain hardware block
 
-
   float_t floatval;  // temp variable
   tim_dev.set_period(&tim_dev, 10-1);
   tim_dev.set_prescaler(&tim_dev, 300-1);
@@ -130,6 +124,10 @@ int main(void)
     // if initialized memory already is available: use "fill_buf" which is more efficient then
     dac_dev.set_sample(&dac_dev, (uint16_t)(3000*floatval), cnt);
   }  
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
     dac_dev.arm(&dac_dev);
