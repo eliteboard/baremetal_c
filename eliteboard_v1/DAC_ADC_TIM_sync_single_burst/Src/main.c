@@ -107,9 +107,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
   // device structures for timer, dac, and adc
-  struct tim_dev_s tim_dev;  // needs to be initialized later!
-  struct int_dac_dev_s dac_dev; //={&hdac1, &tim_dev_1, &int_dac_set_sample, &int_dac_fill_buf, &int_dac_arm};
-  struct int_adc_dev_s adc_dev; //={&hadc1, &tim_dev_1, &int_adc_arm, &int_adc_get_data};
+  // need to be initialized later!
+  struct tim_dev_s tim_dev;  
+  struct int_dac_dev_s dac_dev;
+  struct int_adc_dev_s adc_dev;
 
   // initialize devices structures for timer, dac, and adc
   // note that adc and dac use the same timer for their conversion clock -> synchronous sampling
