@@ -21,7 +21,7 @@
             "runToMain": true,
             /*"interface": "jtag",*/ /*swdp works much better*/
             "cwd": "${workspaceFolder}",
-            "executable": "./build/initial_test.elf",
+            "executable": "./build/DAC_ADC_TIM_sync_single_burst.elf",
             "svdFile": "./../STM32H743x.svd",
 			"armToolchainPath": "${env:ELITEBOARDDIR}/gcc/bin/",
             "preLaunchTask": "Build project"
