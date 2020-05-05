@@ -29,7 +29,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "tim_hal.h"
+#include "internal_dac.h"
+#include "internal_adc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -103,8 +105,38 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  // device structures for timer, dac, and adc
+  struct tim_dev_s tim_dev;  // needs to be initialized later!
+  struct int_dac_dev_s dac_dev; //={&hdac1, &tim_dev_1, &int_dac_set_sample, &int_dac_fill_buf, &int_dac_arm};
+  struct int_adc_dev_s adc_dev; //={&hadc1, &tim_dev_1, &int_adc_arm, &int_adc_get_data};
+
+  // initialize devices structures for timer, dac, and adc
+  // note that adc and dac use the same timer for their conversion clock -> synchronous sampling
+  tim_dev_init(&tim_dev, &htim1);  // "connect" timer device with a certain hardware block
+  int_dac_dev_init(&dac_dev, &tim_dev, &hdac1);  // "connect" dac device with a timer and a certain hardware block
+  int_adc_dev_init(&adc_dev, &tim_dev, &hadc1);  // "connect" adc device with a timer and a certain hardware block
+
+
+  float_t floatval;  // temp variable
+  tim_dev.set_period(&tim_dev, 10-1);
+  tim_dev.set_prescaler(&tim_dev, 300-1);
+
+  for(uint16_t cnt=0; cnt<INT_DAC_BUFFER_LENGTH; cnt++)
+  {
+    floatval = (0.5+0.5*cos(4*2*M_PI*(cnt)/(INT_DAC_BUFFER_LENGTH)));  //do not forget dc-offset
+    // fill dac-buffer sample by sample using "set_sample"
+    // if initialized memory already is available: use "fill_buf" which is more efficient then
+    dac_dev.set_sample(&dac_dev, (uint16_t)(3000*floatval), cnt);
+  }  
   while (1)
   {
+    dac_dev.arm(&dac_dev);
+    adc_dev.arm(&adc_dev);
+    tim_dev.start(&tim_dev);
+    while(!adc_dev.data_avail); //wait for end of conversion (other tasks could be performed in the meantime)
+    tim_dev.stop(&tim_dev); //conversion done -> stop timer
+    HAL_UART_Transmit(&huart4, (uint8_t *) adc_dev.get_data(&adc_dev), 4*INT_ADC_BUFFER_LENGTH, HAL_MAX_DELAY);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
