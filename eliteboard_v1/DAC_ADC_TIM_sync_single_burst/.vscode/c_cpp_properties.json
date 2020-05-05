@@ -8,11 +8,7 @@
                 "${workspaceFolder}/Drivers/CMSIS/Include/*",
                 "${workspaceFolder}/Drivers/STM32H7xx_HAL_Driver/Inc/*",
                 "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32H7xx/Include/*",
-                "${workspaceFolder}/periph_drivers/**",
-                "${workspaceFolder}/Middlewares/Third_Party/FatFs/src/**",
-                "${workspaceFolder}/Middlewares/Third_Party/LwIP/src/include/*",
-                "${workspaceFolder}/Middlewares/Third_Party/LwIP/system/*",
-                "${workspaceFolder}/Middlewares/Third_Party/LwIP/system/arch/*"
+                "${workspaceFolder}/periph_drivers/**"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
