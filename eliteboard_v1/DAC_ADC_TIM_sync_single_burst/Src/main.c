@@ -114,12 +114,13 @@ int main(void)
   int_adc_dev_init(&adc_dev, &tim_dev, &hadc1);  // "connect" adc device with a timer and a certain hardware block
 
   float_t floatval;  // temp variable
-  tim_dev.set_period(&tim_dev, 10-1);
-  tim_dev.set_prescaler(&tim_dev, 300-1);
-
-  for(uint16_t cnt=0; cnt<INT_DAC_BUFFER_LENGTH; cnt++)
+  dac_dev.set_nsamp(&dac_dev, 1000); // must be smaller than INT_DAC_MAX_BUFFER_LENGTH and INT_ADC_MAX_BUFFER_LENGTH
+  adc_dev.set_nsamp(&adc_dev, dac_dev.nsamp);  // dac and adc use the same number of samples
+  tim_dev.set_freq(&tim_dev, 1e6);  // set sampling frequency
+  
+  for(uint16_t cnt=0; cnt<dac_dev.nsamp; cnt++)
   {
-    floatval = (0.5+0.5*cos(4*2*M_PI*(cnt)/(INT_DAC_BUFFER_LENGTH)));  //do not forget dc-offset
+    floatval = (0.5+0.5*cos(10*2*M_PI*(cnt)/(dac_dev.nsamp)));  //do not forget dc-offset
     // fill dac-buffer sample by sample using "set_sample"
     // if initialized memory already is available: use "fill_buf" which is more efficient then
     dac_dev.set_sample(&dac_dev, (uint16_t)(3000*floatval), cnt);
@@ -135,7 +136,7 @@ int main(void)
     tim_dev.start(&tim_dev);
     while(!adc_dev.data_avail); //wait for end of conversion (other tasks could be performed in the meantime)
     tim_dev.stop(&tim_dev); //conversion done -> stop timer
-    HAL_UART_Transmit(&huart4, (uint8_t *) adc_dev.get_data(&adc_dev), 4*INT_ADC_BUFFER_LENGTH, HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart4, (uint8_t *) adc_dev.get_data(&adc_dev), 4*adc_dev.nsamp, HAL_MAX_DELAY);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
