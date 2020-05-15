@@ -36,6 +36,8 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+periph_drivers/bus/i2c_hal.c \
+periph_drivers/pwr_meas/isl28023.c \
 Src/main.c \
 Src/gpio.c \
 Src/debug.c \
@@ -121,6 +123,8 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
+-Iperiph_drivers/bus \
+-Iperiph_drivers/pwr_meas \
 -IInc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc/Legacy \
