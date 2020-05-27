@@ -18,12 +18,16 @@
                 "BMPGDBSerialPort": "COM9", /*If any of your ports are 10 or over, use this format: \\.\COM10*/
                 "preLaunchCommands": ["mon connect_srst enable","mon hard_srst","mon swdp_scan","att 1","load"], /*activate srst and reattach+load*/
             },
+            "osx": {
+                "BMPGDBSerialPort": "/dev/cu.usbmodem79AA5FA21", /*If any of your ports are 10 or over, use this format: \\.\COM10*/
+                "preLaunchCommands": ["mon connect_srst enable","mon hard_srst","mon swdp_scan","att 1","load"], /*activate srst and reattach+load*/
+            },
             "runToMain": true,
             /*"interface": "jtag",*/ /*swdp works much better*/
             "cwd": "${workspaceFolder}",
             "executable": "./build/DAC_ADC_TIM_sync_single_burst.elf",
             "svdFile": "./../STM32H743x.svd",
-			"armToolchainPath": "${env:ELITEBOARDDIR}/gcc/bin/",
+			"armToolchainPath": "/usr/local/bin/",
             "preLaunchTask": "Build project"
             /*"graphConfig":
             [

@@ -13,9 +13,12 @@
 			},
 			"linux": {
 				"command": "make"
+            },
+            "osx": {
+				"command": "make"
 			},
             "args": [
-                "GCC_PATH=${env:ELITEBOARDDIR}/gcc/bin/",
+                "GCC_PATH=/usr/local/bin/",
                 "-j4"
             ],
             "problemMatcher": {
