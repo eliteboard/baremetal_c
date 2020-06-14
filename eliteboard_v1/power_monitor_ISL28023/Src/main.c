@@ -26,6 +26,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "i2c_hal.h"
+#include "isl28023.h"
 
 /* USER CODE END Includes */
 
@@ -46,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+struct i2c_dev_s i2c_dev={&hi2c2, &i2c_mem_read, &i2c_mem_write, &i2c_master_transmit};  //TODO: change to init-fct-based approach
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,9 +92,12 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_UART4_Init();
-  MX_I2C1_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
-
+  struct isl28023_dev_s isl28023_dev;
+  isl28023_init(&isl28023_dev, &i2c_dev, 0b10001010); //address must be shifted to the left for HAL
+  volatile uint8_t tmp;
+  uint8_t datatmp[9];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -102,6 +107,15 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    int8_t error = isl28023_dev.read_ID(&isl28023_dev, &datatmp[0]);
+    if(error == 0)
+    {
+      tmp=0; // no error
+    }
+    else
+    {
+      tmp=1; // error occurred
+    }
   }
   /* USER CODE END 3 */
 }
@@ -159,7 +173,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_I2C1;
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_I2C2;
   PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
   PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_D2PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
