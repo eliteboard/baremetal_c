@@ -98,6 +98,9 @@ int main(void)
   isl28023_init(&isl28023_dev, &i2c_dev, 0b10001010); //address must be shifted to the left for HAL
   volatile uint8_t tmp;
   uint8_t datatmp[9];
+  float_t datatmp_float=0;
+  for(int cnt=0; cnt<9; cnt++)
+    datatmp[cnt]=0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -108,6 +111,15 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     int8_t error = isl28023_dev.read_ID(&isl28023_dev, &datatmp[0]);
+    if(error == 0)
+    {
+      tmp=0; // no error
+    }
+    else
+    {
+      tmp=1; // error occurred
+    }
+    error = isl28023_dev.read_vshunt(&isl28023_dev, &datatmp_float);
     if(error == 0)
     {
       tmp=0; // no error
