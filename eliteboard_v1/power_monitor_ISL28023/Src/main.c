@@ -95,7 +95,8 @@ int main(void)
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   struct isl28023_dev_s isl28023_dev;
-  isl28023_init(&isl28023_dev, &i2c_dev, 0b10001010); //address must be shifted to the left for HAL
+  float_t rshunt = 0.5;
+  isl28023_init(&isl28023_dev, &i2c_dev, 0b10001010, rshunt); //address must be shifted to the left for HAL
   volatile uint8_t tmp;
   uint8_t datatmp[9];
   float_t datatmp_float=0;
@@ -119,7 +120,28 @@ int main(void)
     {
       tmp=1; // error occurred
     }
+    
     error = isl28023_dev.read_vshunt(&isl28023_dev, &datatmp_float);
+    if(error == 0)
+    {
+      tmp=0; // no error
+    }
+    else
+    {
+      tmp=1; // error occurred
+    }
+
+    error = isl28023_dev.read_vout(&isl28023_dev, &datatmp_float);
+    if(error == 0)
+    {
+      tmp=0; // no error
+    }
+    else
+    {
+      tmp=1; // error occurred
+    }
+
+    error = isl28023_dev.read_iout(&isl28023_dev, &datatmp_float);
     if(error == 0)
     {
       tmp=0; // no error
