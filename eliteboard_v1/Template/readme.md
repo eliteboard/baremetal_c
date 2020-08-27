@@ -1,5 +1,5 @@
 # Eliteboard C-Project Template
-This template contains all files required for setting up a new C project for the Eliteboard.<br>
+This template contains all files required for setting up a new C project for the Eliteboard.  
 Make sure to check the repository out with the `--recurse-submodules` option to also get periph_drivers.
 
 ## Prerequisites
@@ -9,9 +9,9 @@ See *Manual installation of the development environment* section [here](https://
 1. Copy the contents of this folder to you new project's directory.
 2. Rename `template.ioc` to `<project-name>.ioc`, according to your new project's name.
 3. Open `<project-name>.ioc` in [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html#get-software).
-4. *If required*, adapt the project settings within STM32CubeMX.<br>
+4. *If required*, adapt the project settings within STM32CubeMX.  
    By default, most peripherals are enabled and routed to pins, LwIP and FatFs are enabled and the clock tree is properly set-up.
-5. In STM32CubeMX, click `Generate code`.<br>
+5. In STM32CubeMX, click `Generate code`.  
    This will copy all required dependencies to you project folder and generate a Makefile and a `main.c`.[^1]
 6. Open `.vscode\launch.json` and adapt `configurations.executable` and `configurations.<your-os>.BMPGDBSerialPort` according to the project name and your attached Eliteboard's BMP-COM-Port.
 7. Open your new project's folder in VSCode.
