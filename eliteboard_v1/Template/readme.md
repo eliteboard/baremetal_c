@@ -3,7 +3,8 @@ This template contains all files required for setting up a new C project for the
 Make sure to check the repository out with the `--recurse-submodules` option to also get periph_drivers.
 
 ## Prerequisites
-See *Manual installation of the development environment* section [here](https://gitlab.nthfs.jku.at/eliteboard/vscode_c_examples). 
+* See *Manual installation of the development environment* section [here](https://gitlab.nthfs.jku.at/eliteboard/vscode_c_examples).  
+* See the [hardware repository](https://gitlab.nthfs.jku.at/eliteboard/hardware) for a pinout of the board.
 
 ## Usage
 1. Copy the contents of this folder to you new project's directory.
