@@ -11,8 +11,8 @@ See *Manual installation of the development environment* section [here](https://
 4. *If required*, adapt the project settings within STM32CubeMX.<br>
    By default, most peripherals are enabled and routed to pins, LwIP and FatFs are enabled and the clock tree is properly set-up.<br>
    It is recommended to migrate the project to the newest STM library on initial project set-up.<br>
-   It is also recommended to use the code-generation settings depicted below.
-   ![STM32CubeMX Code-generation settings](template-img/cubemx-recommended.png)
+   It is also recommended to use the code-generation settings depicted below.<br>
+   ![STM32CubeMX Code-generation settings](template-img/cubemx_recommended.png)
 5. In STM32CubeMX, click `Generate code`.<br>
    This will copy all required dependencies to your project folder and generate a Makefile and a `main.c`.[^1]
 6. *If required*, initialize an empty git repository in the project folder with `git init`.
