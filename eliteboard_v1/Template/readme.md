@@ -22,6 +22,8 @@ See *Manual installation of the development environment* section [here](https://
 10. *If required*, stage files in git with `git add .` and issue the initial commit with `git commit -m 'Initial commit'`.
 11. Open your new project's folder in VSCode. Press `Ctrl`+`Shift`+`B` to compile the empty project.
 
+
+## Example (Debian)
 ![Creation of empty Eliteboard C-Project using this template](template-img/procedure.png)
 
 ## Notes
