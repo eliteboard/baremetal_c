@@ -62,7 +62,9 @@ Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c \
-Src/system_stm32h7xx.c
+Src/system_stm32h7xx.c \
+periph_drivers/bus/i2c_hal.c \
+periph_drivers/supply/lt3582.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -123,7 +125,9 @@ C_INCLUDES =  \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-Iperiph_drivers/bus \
+-Iperiph_drivers/supply
 
 
 # compile gcc flags
