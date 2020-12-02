@@ -36,7 +36,7 @@
             "compilerPath": "${env:ELITEBOARDDIR}/arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=hard",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
+            "intelliSenseMode": "gcc-arm"
         },
         {
             "name": "osx",
@@ -55,7 +55,7 @@
             "compilerPath": "/opt/brew/bin/arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=hard",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
+            "intelliSenseMode": "gcc-arm"
         }
     ],
     "version": 4
