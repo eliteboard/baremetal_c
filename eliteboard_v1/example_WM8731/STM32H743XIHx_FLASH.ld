@@ -72,6 +72,11 @@ FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 2048K
 /* Define output sections */
 SECTIONS
 {
+  .dma_buffer : /* Space before ':' is critical */
+  {
+    *(.dma_buffer)
+  } >RAM_D2
+  
   /* The startup code goes first into FLASH */
   .isr_vector :
   {
