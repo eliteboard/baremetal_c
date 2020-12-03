@@ -31,7 +31,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "i2c_hal.h"
+#include "wm8731.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -122,13 +123,29 @@ int main(void)
   MX_TIM16_Init();
   MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
+  struct i2c_dev_s i2c_dev;
+  i2c_init(&i2c_dev, &hi2c2);
 
+  int16_t dac_buffer[WM8731_DAC_BUF_LEN/2],  adc_buffer[WM8731_DAC_BUF_LEN/2];
+  struct wm8731_dev_s wm8731_dev;
+  wm8731_init(&wm8731_dev, &i2c_dev, &hsai_BlockB1, &hsai_BlockA1, 0b00110100);
+  wm8731_dev.setup(&wm8731_dev, ADC48_DAC48); //initialize audio codec and set sampling rate
+  wm8731_dev.startAdcDma(&wm8731_dev); //start audio input
+  wm8731_dev.startDacDma(&wm8731_dev); //start audio output
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    wm8731_dev.waitInBuf(&wm8731_dev);    
+    wm8731_dev.getInBuf(&wm8731_dev, adc_buffer);
+    for(int16_t cnt=0; cnt<WM8731_DAC_BUF_LEN/2; cnt++)
+    {
+      dac_buffer[cnt] = adc_buffer[cnt];  // passthrough, but could do more interesting stuff here
+    }
+    wm8731_dev.waitOutBuf(&wm8731_dev);
+    wm8731_dev.putOutBuf(&wm8731_dev, dac_buffer);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
