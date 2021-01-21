@@ -1,0 +1,11 @@
+*.d
+*.lst
+*.o
+*.hex
+ipch
+*.bin
+*.elf
+*.map
+.cortex-debug.peripherals.state.json
+.cortex-debug.registers.state.json
+settings.json
