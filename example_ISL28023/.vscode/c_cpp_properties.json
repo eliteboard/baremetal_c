@@ -17,7 +17,7 @@
             "compilerPath": "${env:ELITEBOARDDIR}/gcc/bin/arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=hard",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
+            "intelliSenseMode": "gcc-arm"
         },
         {
             "name": "Win32",
@@ -40,7 +40,7 @@
             "compilerPath": "${env:ELITEBOARDDIR}/gcc/bin/arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=hard",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
+            "intelliSenseMode": "gcc-arm"
         }
     ],
     "version": 4
