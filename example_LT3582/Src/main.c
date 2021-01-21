@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-struct i2c_dev_s i2c_dev={&hi2c2, &i2c_mem_read, &i2c_mem_write, &i2c_master_transmit};  //TODO: change to init-fct-based approach
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,6 +93,9 @@ int main(void)
   MX_I2C4_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
+  struct i2c_dev_s i2c_dev;
+  i2c_init(&i2c_dev, &hi2c2);
+
   struct lt3582_dev_s lt3582_dev;
   uint8_t lt3582_adr = 0x62;  //address must be shifted to the left for HAL
   lt3582_init(&lt3582_dev, &i2c_dev, lt3582_adr);  //"constructor" for lt3582

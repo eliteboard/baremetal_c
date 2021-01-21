@@ -48,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-struct i2c_dev_s i2c_dev={&hi2c2, &i2c_mem_read, &i2c_mem_write, &i2c_master_transmit};  //TODO: change to init-fct-based approach
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -94,6 +94,9 @@ int main(void)
   MX_UART4_Init();
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
+  struct i2c_dev_s i2c_dev;
+  i2c_init(&i2c_dev, &hi2c2);
+
   struct isl28023_dev_s isl28023_dev;
   float_t rshunt = 0.5;
   isl28023_init(&isl28023_dev, &i2c_dev, 0b10001010, rshunt); //address must be shifted to the left for HAL
