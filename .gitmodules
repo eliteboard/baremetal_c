@@ -1,0 +1,10 @@
+[submodule "example_WM8731/periph_drivers"]
+	path = example_WM8731/periph_drivers
+	url = https://github.com/eliteboard/periph_drivers.git
+[submodule "example_LT3582/periph_drivers"]
+	path = example_LT3582/periph_drivers
+	url = https://github.com/eliteboard/periph_drivers.git
+[submodule "example_ISL28023/periph_drivers"]
+	path = example_ISL28023/periph_drivers
+	url = https://github.com/eliteboard/periph_drivers.git
+
