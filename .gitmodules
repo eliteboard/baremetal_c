@@ -8,3 +8,6 @@
 	path = example_ISL28023/periph_drivers
 	url = https://github.com/eliteboard/periph_drivers.git
 
+[submodule "DAC_ADC_TIM_sync_single_burst/periph_drivers"]
+	path = DAC_ADC_TIM_sync_single_burst/periph_drivers
+	url = https://github.com/eliteboard/periph_drivers.git
