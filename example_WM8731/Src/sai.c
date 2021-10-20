@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -18,9 +18,6 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "sai.h"
-
-#include "gpio.h"
-#include "dma.h"
 
 /* USER CODE BEGIN 0 */
 
@@ -34,6 +31,18 @@ DMA_HandleTypeDef hdma_sai1_a;
 /* SAI1 init function */
 void MX_SAI1_Init(void)
 {
+
+  /* USER CODE BEGIN SAI1_Init 0 */
+
+  /* USER CODE END SAI1_Init 0 */
+
+  /* USER CODE BEGIN SAI1_Init 1 */
+
+  /* USER CODE END SAI1_Init 1 */
+
+  /* USER CODE BEGIN SAI1_Init 1 */
+
+  /* USER CODE END SAI1_Init 1 */
 
   hsai_BlockA1.Instance = SAI1_Block_A;
   hsai_BlockA1.Init.Protocol = SAI_FREE_PROTOCOL;
@@ -95,17 +104,31 @@ void MX_SAI1_Init(void)
     Error_Handler();
   }
 
+  /* USER CODE BEGIN SAI1_Init 2 */
+
+  /* USER CODE END SAI1_Init 2 */
+
 }
 static uint32_t SAI1_client =0;
 
-void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
+void HAL_SAI_MspInit(SAI_HandleTypeDef* saiHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct;
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 /* SAI1 */
-    if(hsai->Instance==SAI1_Block_A)
+    if(saiHandle->Instance==SAI1_Block_A)
     {
     /* SAI1 clock enable */
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
+    PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     if (SAI1_client == 0)
     {
        __HAL_RCC_SAI1_CLK_ENABLE();
@@ -150,12 +173,21 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_a);
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_a);
+    __HAL_LINKDMA(saiHandle,hdmarx,hdma_sai1_a);
+    __HAL_LINKDMA(saiHandle,hdmatx,hdma_sai1_a);
     }
-    if(hsai->Instance==SAI1_Block_B)
+    if(saiHandle->Instance==SAI1_Block_B)
     {
       /* SAI1 clock enable */
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
+    PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
       if (SAI1_client == 0)
       {
        __HAL_RCC_SAI1_CLK_ENABLE();
@@ -191,16 +223,16 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
+    __HAL_LINKDMA(saiHandle,hdmarx,hdma_sai1_b);
+    __HAL_LINKDMA(saiHandle,hdmatx,hdma_sai1_b);
     }
 }
 
-void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
+void HAL_SAI_MspDeInit(SAI_HandleTypeDef* saiHandle)
 {
 
 /* SAI1 */
-    if(hsai->Instance==SAI1_Block_A)
+    if(saiHandle->Instance==SAI1_Block_A)
     {
     SAI1_client --;
     if (SAI1_client == 0)
@@ -218,10 +250,10 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_2);
 
-    HAL_DMA_DeInit(hsai->hdmarx);
-    HAL_DMA_DeInit(hsai->hdmatx);
+    HAL_DMA_DeInit(saiHandle->hdmarx);
+    HAL_DMA_DeInit(saiHandle->hdmatx);
     }
-    if(hsai->Instance==SAI1_Block_B)
+    if(saiHandle->Instance==SAI1_Block_B)
     {
     SAI1_client --;
       if (SAI1_client == 0)
@@ -235,8 +267,8 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     */
     HAL_GPIO_DeInit(GPIOE, GPIO_PIN_3);
 
-    HAL_DMA_DeInit(hsai->hdmarx);
-    HAL_DMA_DeInit(hsai->hdmatx);
+    HAL_DMA_DeInit(saiHandle->hdmarx);
+    HAL_DMA_DeInit(saiHandle->hdmatx);
     }
 }
 

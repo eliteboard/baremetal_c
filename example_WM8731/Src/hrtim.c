@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * File Name          : HRTIM.c
-  * Description        : This file provides code for the configuration
-  *                      of the HRTIM instances.
+  * @file    hrtim.c
+  * @brief   This file provides code for the configuration
+  *          of the HRTIM instances.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -29,11 +29,19 @@ HRTIM_HandleTypeDef hhrtim;
 /* HRTIM init function */
 void MX_HRTIM_Init(void)
 {
+
+  /* USER CODE BEGIN HRTIM_Init 0 */
+
+  /* USER CODE END HRTIM_Init 0 */
+
   HRTIM_FaultCfgTypeDef pFaultCfg = {0};
   HRTIM_TimeBaseCfgTypeDef pTimeBaseCfg = {0};
   HRTIM_TimerCfgTypeDef pTimerCfg = {0};
   HRTIM_OutputCfgTypeDef pOutputCfg = {0};
 
+  /* USER CODE BEGIN HRTIM_Init 1 */
+
+  /* USER CODE END HRTIM_Init 1 */
   hhrtim.Instance = HRTIM1;
   hhrtim.Init.HRTIMInterruptResquests = HRTIM_IT_NONE;
   hhrtim.Init.SyncOptions = HRTIM_SYNCOPTION_NONE;
@@ -87,10 +95,6 @@ void MX_HRTIM_Init(void)
   {
     Error_Handler();
   }
-  pTimerCfg.InterruptRequests = HRTIM_MASTER_IT_NONE;
-  pTimerCfg.DMASrcAddress = 0x0000;
-  pTimerCfg.DMADstAddress = 0x0000;
-  pTimerCfg.DMASize = 0x1;
   pTimerCfg.DelayedProtectionMode = HRTIM_TIMER_D_E_DELAYEDPROTECTION_DISABLED;
   if (HAL_HRTIM_WaveformTimerConfig(&hhrtim, HRTIM_TIMERINDEX_TIMER_E, &pTimerCfg) != HAL_OK)
   {
@@ -124,6 +128,9 @@ void MX_HRTIM_Init(void)
   {
     Error_Handler();
   }
+  /* USER CODE BEGIN HRTIM_Init 2 */
+
+  /* USER CODE END HRTIM_Init 2 */
   HAL_HRTIM_MspPostInit(&hhrtim);
 
 }
@@ -132,11 +139,21 @@ void HAL_HRTIM_MspInit(HRTIM_HandleTypeDef* hrtimHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hrtimHandle->Instance==HRTIM1)
   {
   /* USER CODE BEGIN HRTIM1_MspInit 0 */
 
   /* USER CODE END HRTIM1_MspInit 0 */
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_HRTIM1;
+    PeriphClkInitStruct.Hrtim1ClockSelection = RCC_HRTIM1CLK_TIMCLK;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     /* HRTIM1 clock enable */
     __HAL_RCC_HRTIM1_CLK_ENABLE();
 
@@ -167,14 +184,23 @@ void HAL_HRTIM_MspPostInit(HRTIM_HandleTypeDef* hrtimHandle)
 
   /* USER CODE END HRTIM1_MspPostInit 0 */
 
+    __HAL_RCC_GPIOE_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOG_CLK_ENABLE();
     /**HRTIM GPIO Configuration
+    PE1     ------> HRTIM_SCOUT
     PC7     ------> HRTIM_CHA2
     PC6     ------> HRTIM_CHA1
     PG7     ------> HRTIM_CHE2
     PG6     ------> HRTIM_CHE1
     */
+    GPIO_InitStruct.Pin = GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF3_HRTIM1;
+    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
     GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_6;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -209,12 +235,15 @@ void HAL_HRTIM_MspDeInit(HRTIM_HandleTypeDef* hrtimHandle)
 
     /**HRTIM GPIO Configuration
     PD4     ------> HRTIM_FLT3
+    PE1     ------> HRTIM_SCOUT
     PC7     ------> HRTIM_CHA2
     PC6     ------> HRTIM_CHA1
     PG7     ------> HRTIM_CHE2
     PG6     ------> HRTIM_CHE1
     */
     HAL_GPIO_DeInit(GPIOD, GPIO_PIN_4);
+
+    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_1);
 
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_7|GPIO_PIN_6);
 
