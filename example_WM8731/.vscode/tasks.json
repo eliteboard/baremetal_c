@@ -9,7 +9,11 @@
             },
             "type": "shell",
 			"windows": {
-				"command": "mingw32-make"
+				"command": "${env:ELITEBOARDDIR}\\mingw\\bin\\mingw32-make.exe",
+                "args": [
+                    "GCC_PATH=${env:ELITEBOARDDIR}/gcc/bin/",
+                    "-j4"
+                ]
 			},
 			"linux": {
                 "command": "make",
