@@ -16,16 +16,16 @@
                 "preLaunchCommands": ["mon connect_srst enable","mon hard_srst","mon swdp_scan","att 1","load"] /*activate srst and reattach+load*/
 			},
 			"windows": {
-			    "armToolchainPath": "${env:ELITEBOARDDIR}",
+			    "armToolchainPath": "${env:ELITEBOARDDIR}/gcc/bin/",
                 "BMPGDBSerialPort": "\\\\.\\COM15", /*If any of your ports are 10 or over, use this format: \\.\COM10*/
                 "preLaunchCommands": ["mon connect_srst enable","mon hard_srst","mon swdp_scan","att 1","load"], /*activate srst and reattach+load*/
             },
             "osx": {
 			    "armToolchainPath": "/opt/brew/bin/",
-                "BMPGDBSerialPort": "/dev/cu.usbmodem79A580A31", /*If any of your ports are 10 or over, use this format: \\.\COM10*/
+                "BMPGDBSerialPort": "/dev/cu.usbmodem79A580A31",
                 "preLaunchCommands": ["mon connect_srst enable","mon hard_srst","mon swdp_scan","att 1","load"], /*activate srst and reattach+load*/
             },
-            "runToMain": true,
+            "runToEntryPoint": "main",
             /*"interface": "jtag",*/ /*swdp works much better*/
             "cwd": "${workspaceFolder}",
             "executable": "./build/template.elf",

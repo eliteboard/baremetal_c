@@ -9,7 +9,11 @@
             },
             "type": "shell",
 			"windows": {
-				"command": "mingw32-make"
+				"command": "${env:ELITEBOARDDIR}/mingw/bin/mingw32-make",
+                "args": [
+                    "GCC_PATH=${env:ELITEBOARDDIR}/gcc/bin/",
+                    "-j4"
+                ]
 			},
 			"linux": {
                 "command": "make",
@@ -25,16 +29,7 @@
                     "-j4"
                 ]
 			},
-            "problemMatcher": {
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
+            "problemMatcher": ["$gcc"],
             "presentation": {
                 "focus": true
             },
