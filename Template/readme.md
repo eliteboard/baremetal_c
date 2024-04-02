@@ -2,7 +2,7 @@
 This template contains all files required for setting up a new C project for the Eliteboard.<br>
 
 ## Prerequisites
-See *Manual installation of the development environment* section [here](https://gitlab.nthfs.jku.at/eliteboard/vscode_c_examples). 
+See *Manual installation of the development environment* section [here](https://github.com/eliteboard/docs). 
 
 ## Usage
 1. Copy `.vscode/` and `template.ioc` from this folder to your new project's directory.
